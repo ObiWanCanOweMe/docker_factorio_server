@@ -11,7 +11,7 @@ LATEST_MINOR=`echo $LATEST_VERSION | cut -c 3- | rev | cut -c 4- | rev`
 LATEST_PATCH=`echo $LATEST_VERSION | cut -c 6-`
 
 # Make sure we have the latest code before doing version comparisons
-cd /home/akener/repo/docker_factorio_server
+cd $REPO_HOME
 git checkout 0.16
 git pull
 
