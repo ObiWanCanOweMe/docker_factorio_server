@@ -1,5 +1,8 @@
 #!/bin/sh
 
+# Values for $API_USER, $API_TOKEN, $BUILD_TOKEN
+source /home/akener/.jenkins_auth
+
 REPO_HOME="/home/akener/repo/docker_factorio_server/"
 DOCKERFILE="$REPO_HOME/Dockerfile"
 DOCKER_README="$REPO_HOME/README.md"
@@ -12,7 +15,6 @@ LATEST_PATCH=`echo $LATEST_VERSION | cut -c 6-`
 
 # Make sure we have the latest code before doing version comparisons
 cd $REPO_HOME
-git checkout 0.16
 git pull
 git fetch --tags
 
@@ -29,9 +31,9 @@ if [ $LATEST_VERSION != $CURRENT_VERSION ]; then
   cd $REPO_HOME
   git add $DOCKERFILE $DOCKER_README
   git commit -m "update to $LATEST_VERSION"
-  git tag -a $LATEST_VERSION -m "$LATEST_VERSION"
+  git tag -fa $LATEST_VERSION -m "$LATEST_VERSION"
   git push --tags origin master
 
   # Kick off Jenkins job to build new image and push to Docker Hub
-  curl -sSL https://jenkins.kener.org/job/docker_factorio_server_0.16/build?token=81C6FAB787C49142B7D915338EF11
+  curl -sSL https://$API_USER:$API_TOKEN@jenkins.kener.org/job/docker_factorio_server_0.16/build?token=$BUILD_TOKEN
 fi
