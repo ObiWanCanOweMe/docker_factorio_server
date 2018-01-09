@@ -14,6 +14,7 @@ LATEST_PATCH=`echo $LATEST_VERSION | cut -c 6-`
 cd $REPO_HOME
 git checkout 0.16
 git pull
+git fetch --tags
 
 if [ $LATEST_VERSION != $CURRENT_VERSION ]; then
   echo "The repo version is $CURRENT_VERSION and the latest release is $LATEST_VERSION"
