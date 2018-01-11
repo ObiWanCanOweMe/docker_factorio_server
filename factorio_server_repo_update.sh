@@ -1,5 +1,12 @@
 #!/bin/sh
 
+# Check for already running instance of same script
+if ps ax | grep $0 | grep -v $$ | grep bash | grep -v grep
+then
+  echo "The script is already running."
+  exit 1
+fi
+
 # Values for $API_USER, $API_TOKEN, $BUILD_TOKEN
 source /home/akener/.jenkins_auth
 
