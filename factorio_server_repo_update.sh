@@ -13,8 +13,8 @@ source /home/akener/.jenkins_auth
 REPO_HOME="/home/akener/repo/docker_factorio_server/"
 DOCKERFILE="$REPO_HOME/Dockerfile"
 DOCKER_README="$REPO_HOME/README.md"
-CURRENT_VERSION=`curl -s https://raw.githubusercontent.com/ObiWanCanOweMe/docker_factorio_server/0.16/Dockerfile | grep VERSION= | awk '{print $1}' | grep -Eo '(0(.*))'`
-CURRENT_SHA1=`curl -s https://raw.githubusercontent.com/ObiWanCanOweMe/docker_factorio_server/0.16/Dockerfile | grep SHA1= | awk '{print $1}' | grep -Eo '(=\s*(.*))' | cut -c 2-`
+CURRENT_VERSION=`curl -s https://raw.githubusercontent.com/ObiWanCanOweMe/docker_factorio_server/master/Dockerfile | grep VERSION= | awk '{print $1}' | grep -Eo '(0(.*))'`
+CURRENT_SHA1=`curl -s https://raw.githubusercontent.com/ObiWanCanOweMe/docker_factorio_server/master/Dockerfile | grep SHA1= | awk '{print $1}' | grep -Eo '(=\s*(.*))' | cut -c 2-`
 LATEST_VERSION=`curl -s https://factorio.com/ | grep Experimental | awk '{print $2}'`
 LATEST_MAJOR="0"
 LATEST_MINOR=`echo $LATEST_VERSION | cut -c 3- | rev | cut -c 4- | rev`
@@ -42,5 +42,5 @@ if [ $LATEST_VERSION != $CURRENT_VERSION ]; then
   git push --tags origin master
 
   # Kick off Jenkins job to build new image and push to Docker Hub
-  curl -sSL https://$API_USER:$API_TOKEN@jenkins.kener.org/job/docker_factorio_server_0.16/build?token=$BUILD_TOKEN
+  curl -sSL https://$API_USER:$API_TOKEN@jenkins.kener.org/job/docker_factorio_server/build?token=$BUILD_TOKEN
 fi
